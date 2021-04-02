@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="skyblue_100">#82B1FF</color>
+    <color name="skyblue_400">#2979FF</color>
+    <color name="skyblue_700">#304FFE</color>
+    <color name="teal_200">#84FFFF</color>
+    <color name="teal_700">#00E5FF</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="light_blue_100">#b3e5fc</color>
+</resources>
