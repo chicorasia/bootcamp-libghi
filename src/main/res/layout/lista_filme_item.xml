@@ -18,7 +18,7 @@
         >
 
         <TextView
-            android:id="@+id/card_movie_title"
+            android:id="@+id/card_film_title"
             style="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/card_movie_original_title"
+            android:id="@+id/card_film_original_title"
             style="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,36 +38,36 @@
             android:text="となりのトトロ"
             android:textSize="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_movie_title" />
+            app:layout_constraintTop_toBottomOf="@+id/card_film_title" />
 
         <TextView
-            android:id="@+id/card_movie_director"
+            android:id="@+id/card_film_director"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_condensed_light"
-            app:layout_constraintTop_toBottomOf="@id/card_movie_original_title"
+            app:layout_constraintTop_toBottomOf="@id/card_film_original_title"
             app:layout_constraintStart_toStartOf="parent"
             android:text="Hayao Miyazaki"
             />
 
         <TextView
-            android:id="@+id/card_movie_year"
+            android:id="@+id/card_film_year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_condensed_light"
             android:text="1986"
-            app:layout_constraintTop_toBottomOf="@id/card_movie_director"
+            app:layout_constraintTop_toBottomOf="@id/card_film_director"
             app:layout_constraintStart_toStartOf="parent"
             />
 
         <TextView
-            android:id="@+id/card_movie_runningtime"
+            android:id="@+id/card_film_runningtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="86'"
             android:background="@color/teal_200"
-            app:layout_constraintTop_toBottomOf="@+id/card_movie_director"
-            app:layout_constraintStart_toEndOf="@id/card_movie_year"/>
+            app:layout_constraintTop_toBottomOf="@+id/card_film_director"
+            app:layout_constraintStart_toEndOf="@id/card_film_year"/>
 
 
 
