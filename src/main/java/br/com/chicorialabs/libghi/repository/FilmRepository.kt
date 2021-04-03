@@ -3,6 +3,7 @@ package br.com.chicorialabs.libghi.repository
 import br.com.chicorialabs.libghi.model.Film
 import br.com.chicorialabs.libghi.model.FilmResult
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
@@ -21,7 +22,11 @@ class FilmRepository {
 
     }
 
-    private fun parseJsonToResult(string: String?) =
-        Gson().fromJson(string, FilmResult::class.java)
+    private fun parseJsonToResult(json: String?): FilmResult {
+
+        val turnsType = object : TypeToken<List<Film>>(){}.type
+        return FilmResult(Gson().fromJson(json, turnsType))
+
+    }
 
 }
