@@ -11,7 +11,8 @@ import br.com.chicorialabs.libghi.model.Film
 class FilmAdapter(private val filmList: List<Film>) : RecyclerView.Adapter<FilmViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder =
-        ListaFilmeItemBinding.inflate(LayoutInflater.from(parent.context)).let {
+        ListaFilmeItemBinding.inflate(LayoutInflater.from(parent.context),
+            parent, false).let {
             FilmViewHolder(it)
     }
 
@@ -23,7 +24,6 @@ class FilmAdapter(private val filmList: List<Film>) : RecyclerView.Adapter<FilmV
 
     override fun getItemCount(): Int = filmList.size
 
-
 }
 
 class FilmViewHolder(val binding: ListaFilmeItemBinding): RecyclerView.ViewHolder(binding.root) {
@@ -32,9 +32,9 @@ class FilmViewHolder(val binding: ListaFilmeItemBinding): RecyclerView.ViewHolde
         binding.apply {
             cardFilmTitle.text = film.title
             cardFilmOriginalTitle.text = film.original_title
-            cardFilmDirector.text = film.director
-            cardFilmYear.text = film.release_date
-            cardFilmRunningtime.text = film.runnning_time
+            cardFilmDirector.text = "Diretor: ${film.director} "
+            cardFilmYear.text = "Lançamento: ${film.release_date} "
+            cardFilmRunningtime.text = "Duração: ${film.running_time}' "
         }
     }
 

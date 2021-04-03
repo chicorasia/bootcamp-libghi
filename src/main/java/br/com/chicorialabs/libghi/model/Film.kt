@@ -11,7 +11,7 @@ data class Film(
     @SerializedName("director") val director: String,
     @SerializedName("producer") val producer: String,
     @SerializedName("release_date") val release_date: String,
-    @SerializedName("runnning_time") val runnning_time: String,
+    @SerializedName("running_time") val running_time: String,
     @SerializedName("rt_score") val rt_score: String,
     @SerializedName("people") val people: List<String>,
     @SerializedName("species") val species: List<String>,

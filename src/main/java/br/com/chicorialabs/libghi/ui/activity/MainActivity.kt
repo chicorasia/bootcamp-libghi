@@ -1,15 +1,13 @@
 package br.com.chicorialabs.libghi.ui.activity
 
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.chicorialabs.libghi.FilmListViewModel
-import br.com.chicorialabs.libghi.R
 import br.com.chicorialabs.libghi.databinding.ActivityMainBinding
 import br.com.chicorialabs.libghi.ui.adapter.FilmAdapter
 
@@ -34,7 +32,8 @@ class MainActivity : AppCompatActivity() {
             .create(FilmListViewModel::class.java)
 
         showProgressBar()
-        Thread {
+
+        Thread{
             mViewModel.init()
         }.start()
 
@@ -54,4 +53,5 @@ class MainActivity : AppCompatActivity() {
     private fun hideProgressBar() {
         progressBar.visibility = View.GONE
     }
+
 }

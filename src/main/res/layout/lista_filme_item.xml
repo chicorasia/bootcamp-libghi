@@ -43,7 +43,8 @@
             android:id="@+id/card_film_director"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_condensed_light"
+            android:background="@color/light_blue_100"
+            android:fontFamily="@font/roboto_condensed_regular"
             app:layout_constraintTop_toBottomOf="@id/card_film_original_title"
             app:layout_constraintStart_toStartOf="parent"
             android:text="Hayao Miyazaki"
@@ -54,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto_condensed_light"
-            android:text="1986"
+            android:text="Ano de lançamento: 19XX"
             app:layout_constraintTop_toBottomOf="@id/card_film_director"
             app:layout_constraintStart_toStartOf="parent"
             />
@@ -63,10 +64,11 @@
             android:id="@+id/card_film_runningtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="86'"
-            android:background="@color/teal_200"
-            app:layout_constraintTop_toBottomOf="@+id/card_film_director"
-            app:layout_constraintStart_toEndOf="@id/card_film_year"/>
+            android:fontFamily="@font/roboto_condensed_light"
+            android:layout_marginStart="16dp"
+            android:text="Duração: 86'"
+            app:layout_constraintStart_toEndOf="@id/card_film_year"
+            app:layout_constraintTop_toBottomOf="@+id/card_film_director" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
