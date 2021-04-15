@@ -33,11 +33,12 @@ class FilmListViewModel : ViewModel() {
 
         viewModelScope.launch {
 
-            if (FilmRepository().loadData() != null){
-                _filmList.value = FilmRepository().loadData()
-            } else {
-                _snackBar.value = "Ocorreu um erro ao recuperar os dados"
+            FilmRepository().loadData()?.let {
+                _filmList.value = it
+            } ?: run {
+                _snackBar.value = "Ocorreu um erro!"
             }
+
         }
 
     }
