@@ -1,15 +1,20 @@
 package br.com.chicorialabs.libghi.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.chicorialabs.libghi.FilmListViewModel
+import br.com.chicorialabs.libghi.FilmLoadError
 import br.com.chicorialabs.libghi.databinding.ActivityMainBinding
 import br.com.chicorialabs.libghi.ui.adapter.FilmAdapter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainProgressbar
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -32,11 +38,7 @@ class MainActivity : AppCompatActivity() {
             .create(FilmListViewModel::class.java)
 
         showProgressBar()
-
-        Thread{
-            mViewModel.init()
-        }.start()
-
+        mViewModel.init()
         mViewModel.filmList.observe(this, {
             val adapter = mViewModel.filmList.value?.let { FilmAdapter(it) }
             filmRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
@@ -53,5 +55,6 @@ class MainActivity : AppCompatActivity() {
     private fun hideProgressBar() {
         progressBar.visibility = View.GONE
     }
+
 
 }

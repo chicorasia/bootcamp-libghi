@@ -1,14 +1,12 @@
 package br.com.chicorialabs.libghi.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.chicorialabs.libghi.R
 import br.com.chicorialabs.libghi.databinding.ListaFilmeItemBinding
 import br.com.chicorialabs.libghi.model.Film
 
-class FilmAdapter(private val filmList: List<Film>) : RecyclerView.Adapter<FilmViewHolder>() {
+class FilmAdapter(private val filmList: ArrayList<Film>) : RecyclerView.Adapter<FilmViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilmViewHolder =
         ListaFilmeItemBinding.inflate(LayoutInflater.from(parent.context),
