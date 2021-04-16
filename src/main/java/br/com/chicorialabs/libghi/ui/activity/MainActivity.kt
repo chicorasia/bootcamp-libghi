@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         showProgressBar()
 
+//      TODO 007: invocar o mViewModel.init() na thread principal
         Thread{
             mViewModel.init()
         }.start()

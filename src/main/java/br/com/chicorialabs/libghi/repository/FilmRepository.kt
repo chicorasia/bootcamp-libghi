@@ -9,6 +9,7 @@ import okhttp3.Request
 
 class FilmRepository {
 
+//    TODO 004: Modificar loadData() para executar a requisição com o Dispatchers.IO
     fun loadData() : List<Film>{
         val client: OkHttpClient = OkHttpClient()
         val request: Request = Request.Builder()
