@@ -32,11 +32,8 @@ class MainActivity : AppCompatActivity() {
             .create(FilmListViewModel::class.java)
 
         showProgressBar()
+        mViewModel.init()
 
-//      TODO 007: invocar o mViewModel.init() na thread principal
-        Thread{
-            mViewModel.init()
-        }.start()
 
         mViewModel.filmList.observe(this, {
             val adapter = mViewModel.filmList.value?.let { FilmAdapter(it) }

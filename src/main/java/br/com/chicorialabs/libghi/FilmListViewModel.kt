@@ -1,10 +1,13 @@
 package br.com.chicorialabs.libghi
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import br.com.chicorialabs.libghi.model.Film
 import br.com.chicorialabs.libghi.repository.FilmRepository
+import kotlinx.coroutines.launch
 
 class FilmListViewModel: ViewModel() {
 
@@ -13,22 +16,31 @@ class FilmListViewModel: ViewModel() {
         get() = _filmList
 
 
-//  TODO 006: invocar o método getAllFilms() a partir da suspend lambda launchDataLoad()
-
-//  TODO 002.1: chamar o método getAllFilms a partir no viewModelScope
     fun init() {
-        getAllFilms()
+        launchDataLoad { getAllFilms() }
     }
 
-//  TODO 002: transformar getAllFilms() em uma função suspend e bloco try-catch lançando FilmLoadError
-    private fun getAllFilms() {
 
-        _filmList.postValue(FilmRepository().loadData())
+    private suspend fun getAllFilms() {
+        try {
+            _filmList.postValue(FilmRepository().loadData())
+        } catch (error: FilmLoadError) {
+            Log.e("lib_ghi", "getAllFilms: Ocorreu um erro do tipo FilmLoadError", )
+        }
+
 
     }
 
-//    TODO 005: criar a função suspend lambda launchDataLoad( () -> Unit )
+    private fun launchDataLoad(block: suspend () -> Unit){
+        viewModelScope.launch {
+            //alguma coisa antes
+            block()
+            //alguma coisa depois
+        }
+    }
 
-//    TODO 003: Criar uma classe FilmLoadError
+
 
 }
+
+class FilmLoadError(override val message: String, cause: Throwable): Throwable()
