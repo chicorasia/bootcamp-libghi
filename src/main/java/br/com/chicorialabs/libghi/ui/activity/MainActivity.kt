@@ -34,6 +34,12 @@ class MainActivity : AppCompatActivity() {
         showProgressBar()
         mViewModel.init()
 
+//        TODO 005: remover os métodos showProgressBar() e hideProgressBar()
+
+//        TODO 006: adicionar um observer para o progressBar
+
+//        TODO 007: adicionar um observer para o snackBar
+
 
         mViewModel.filmList.observe(this, {
             val adapter = mViewModel.filmList.value?.let { FilmAdapter(it) }
