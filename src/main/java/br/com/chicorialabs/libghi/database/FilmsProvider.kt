@@ -4,7 +4,11 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.media.UnsupportedSchemeException
 import android.net.Uri
+import android.provider.BaseColumns._ID
+import br.com.chicorialabs.libghi.database.FilmsDataBaseHelper.Companion.TABLE_FILMS
 
 class FilmsProvider : ContentProvider() {
 
@@ -31,7 +35,56 @@ class FilmsProvider : ContentProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? {
-        TODO("Not yet implemented")
+
+        return when(mUriMatcher.match(uri)){
+            FILMS -> {
+                fetchAllFilms(projection, selection, selectionArgs, sortOrder, uri)
+            }
+            FILMS_BY_ID -> {
+                fetchFilmById(projection, uri, sortOrder)
+            }
+            else -> {throw UnsupportedSchemeException("")}
+        }
+    }
+
+    private fun fetchAllFilms(
+        projection: Array<out String>?,
+        selection: String?,
+        selectionArgs: Array<out String>?,
+        sortOrder: String?,
+        uri: Uri
+    ): Cursor? {
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+        val cursor = db.query(
+            TABLE_FILMS,
+            projection,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            sortOrder
+        )
+        cursor.setNotificationUri(context?.contentResolver, uri)
+        return cursor
+    }
+
+    private fun fetchFilmById(
+        projection: Array<out String>?,
+        uri: Uri,
+        sortOrder: String?
+    ): Cursor? {
+        val db: SQLiteDatabase = dbHelper.writableDatabase
+        val cursor = db.query(
+            TABLE_FILMS,
+            projection,
+            "$_ID = ?",
+            arrayOf(uri.lastPathSegment),
+            null,
+            null,
+            sortOrder
+        )
+        cursor.setNotificationUri(context?.contentResolver, uri)
+        return cursor
     }
 
     override fun getType(uri: Uri): String? {
@@ -39,11 +92,34 @@ class FilmsProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        TODO("Not yet implemented")
+        if(mUriMatcher.match(uri) == FILMS) {
+            val db: SQLiteDatabase = dbHelper.writableDatabase
+            val id: Long = db.insert(TABLE_FILMS, null, values)
+            val insertUri: Uri? = Uri.withAppendedPath(BASE_URI, id.toString())
+            db.close()
+            context?.contentResolver?.notifyChange(uri, null)
+            return insertUri
+        } else {
+            throw UnsupportedSchemeException("Operação não suportada nessa Uri!")
+        }
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        TODO("Not yet implemented")
+
+        if (mUriMatcher.match(uri) == FILMS_BY_ID) {
+            val db: SQLiteDatabase = dbHelper.writableDatabase
+            val linesAffected = db.delete(
+                TABLE_FILMS,
+                "$_ID = ?",
+                arrayOf(uri.lastPathSegment)
+            )
+            db.close()
+            context?.contentResolver?.notifyChange(uri, null)
+            return linesAffected
+        } else {
+            throw UnsupportedSchemeException("Operação não suportada nessa URI")
+        }
+
     }
 
     override fun update(
@@ -59,7 +135,8 @@ class FilmsProvider : ContentProvider() {
 
         const val AUTHORITY = "br.com.chicorialabs.libghi.provider"
         val BASE_URI = Uri.parse("content://$AUTHORITY")
-        val URI_FILMS = Uri.withAppendedPath(BASE_URI, "films") //tabela onde os filmes serão gravados
+        val URI_FILMS =
+            Uri.withAppendedPath(BASE_URI, "films") //tabela onde os filmes serão gravados
 
         const val FILMS: Int = 1
         const val FILMS_BY_ID: Int = 2
