@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.chicorialabs.libghi.model.Film
 import br.com.chicorialabs.libghi.repository.FilmRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class FilmListViewModel: ViewModel() {
@@ -15,9 +16,13 @@ class FilmListViewModel: ViewModel() {
     val filmList: LiveData<List<Film>>
         get() = _filmList
 
-//    TODO 001: adicionar um parâmetro _progressBar do tipo Boolean
-//    TODO 002: adicionar um parâmtro _snackBar do tipo String com valor inicial null
+    private val _progressBar = MutableLiveData<Boolean>()
+    val progressBar: LiveData<Boolean>
+        get() = _progressBar
 
+    private val _snackbar = MutableLiveData<String?>()
+    val snackbar: LiveData<String?>
+        get() = _snackbar
 
     fun init() {
         launchDataLoad { getAllFilms() }
@@ -26,22 +31,29 @@ class FilmListViewModel: ViewModel() {
 
     private suspend fun getAllFilms() {
 
-//        TODO 004: Adicionar o comportamento do _snackBar
         try {
             _filmList.postValue(FilmRepository().loadData())
         } catch (error: FilmLoadError) {
             Log.e("lib_ghi", "getAllFilms: Ocorreu um erro do tipo FilmLoadError", )
+            _snackbar.value = error.message
         }
-
-
+    }
+    
+    fun onSnackBarShown() {
+        _snackbar.value = null
     }
 
     private fun launchDataLoad(block: suspend () -> Unit){
         viewModelScope.launch {
-//            TODO 003: adicionar um bloco try-catch e os comportamentos para o _progressBar
-            //alguma coisa antes
-            block()
-            //alguma coisa depois
+            try {
+                _progressBar.value = true
+                delay(1000)
+                block()
+            } catch (ex: Exception){
+                Log.e("lig_ghi", "launchDataLoad: Ocorreu um erro", )
+            } finally {
+                _progressBar.value = false
+            }
         }
     }
 

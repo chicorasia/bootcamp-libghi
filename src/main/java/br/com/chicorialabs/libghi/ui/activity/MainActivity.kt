@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.chicorialabs.libghi.FilmListViewModel
 import br.com.chicorialabs.libghi.databinding.ActivityMainBinding
 import br.com.chicorialabs.libghi.ui.adapter.FilmAdapter
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,31 +32,32 @@ class MainActivity : AppCompatActivity() {
         val mViewModel = ViewModelProvider.NewInstanceFactory()
             .create(FilmListViewModel::class.java)
 
-        showProgressBar()
+
         mViewModel.init()
 
-//        TODO 005: remover os métodos showProgressBar() e hideProgressBar()
+        mViewModel.progressBar.observe(this) { showProgressBar ->
+            if (showProgressBar) {
+                progressBar.visibility = View.VISIBLE
+            } else {
+                progressBar.visibility = View.GONE
+            }
+        }
 
-//        TODO 006: adicionar um observer para o progressBar
 
-//        TODO 007: adicionar um observer para o snackBar
+        mViewModel.snackbar.observe(this) { snackbarText ->
+            snackbarText?.let {
+                Snackbar.make(binding.root, snackbarText, Snackbar.LENGTH_LONG).show()
+                mViewModel.onSnackBarShown()
+            }
+        }
 
 
         mViewModel.filmList.observe(this, {
             val adapter = mViewModel.filmList.value?.let { FilmAdapter(it) }
             filmRecyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
             filmRecyclerView.adapter = adapter
-            hideProgressBar()
         })
 
-    }
-
-    private fun showProgressBar() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    private fun hideProgressBar() {
-        progressBar.visibility = View.GONE
     }
 
 }
