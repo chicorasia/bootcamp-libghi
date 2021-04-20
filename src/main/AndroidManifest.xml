@@ -11,6 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LibGhi">
+
+        <provider
+            android:authorities="br.com.chicorialabs.libghi.provider"
+            android:name=".database.FilmsProvider"
+            android:enabled="true"
+            android:exported="true"/>
+
+
         <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

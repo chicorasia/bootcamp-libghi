@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns._ID
 
-class DataBaseHelper(context: Context) : SQLiteOpenHelper(
+class FilmsDataBaseHelper(context: Context) : SQLiteOpenHelper(
     context,
     "databaseFilms",
     null,
