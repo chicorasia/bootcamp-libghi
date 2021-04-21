@@ -47,7 +47,6 @@ class FilmListViewModel: ViewModel() {
         viewModelScope.launch {
             try {
                 _progressBar.value = true
-                delay(1000)
                 block()
             } catch (ex: Exception){
                 Log.e("lig_ghi", "launchDataLoad: Ocorreu um erro", )
