@@ -88,7 +88,7 @@ class FilmsProvider : ContentProvider() {
     }
 
     override fun getType(uri: Uri): String? {
-        TODO("Not yet implemented")
+        throw UnsupportedSchemeException("Operação não suportada nessa URI")
     }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
@@ -128,7 +128,20 @@ class FilmsProvider : ContentProvider() {
         selection: String?,
         selectionArgs: Array<out String>?
     ): Int {
-        TODO("Not yet implemented")
+        if (mUriMatcher.match(uri) == FILMS_BY_ID) {
+            val db : SQLiteDatabase = dbHelper.writableDatabase
+            val linesAffected = db.update(
+                TABLE_FILMS,
+                values,
+                "$_ID = ?",
+                arrayOf(uri.lastPathSegment)
+            )
+            db.close()
+            context?.contentResolver?.notifyChange(uri, null)
+            return linesAffected
+        } else {
+            throw UnsupportedSchemeException("Operação não suportada nessa URI")
+        }
     }
 
     companion object {
