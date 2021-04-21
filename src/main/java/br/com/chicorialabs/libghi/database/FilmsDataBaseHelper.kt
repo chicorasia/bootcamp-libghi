@@ -15,15 +15,15 @@ class FilmsDataBaseHelper(context: Context) : SQLiteOpenHelper(
     override fun onCreate(db: SQLiteDatabase?) {
 
             val sql = "CREATE TABLE $TABLE_FILMS (" +
-                    "$_ID INTEGER NOT NULL PRIMARY KEY, +" +
+                    "$_ID INTEGER NOT NULL PRIMARY KEY, " +
                     "$TITLE TEXT NOT NULL," +
-                    "$ORIGINAL_TITLE TEXT NOT NULL, +" +
+                    "$ORIGINAL_TITLE TEXT NOT NULL, " +
                     "$ORIGINAL_TITLE_ROMANISED TEXT NOT NULL," +
                     "$DIRECTOR TEXT NOT NULL," +
                     "$RELEASE_DATE INTEGER NOT NULL," +
                     "$RUNNING_TIME INTEGER NOT NULL," +
                     "$IS_WATCHED INTEGER DEFAULT 0," +
-                    "$RATING INTEGER NOT DEFAULT 0" +
+                    "$RATING INTEGER DEFAULT 0" +
                     ")"
 
         db?.execSQL(sql)
