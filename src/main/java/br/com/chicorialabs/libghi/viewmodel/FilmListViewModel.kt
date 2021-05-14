@@ -9,12 +9,7 @@ import br.com.chicorialabs.libghi.model.Film
 import br.com.chicorialabs.libghi.repository.FilmRepository
 import kotlinx.coroutines.launch
 
-//TODO 001: Adicionar o FilmRepository ao construtor do ViewModel
-//TODO 002: Criar um ViewModelFactory que estende ViewModelProvider.Factory
-//TODO 003: Implementar o membro <T: ViewModel?> create()
-//TODO 004: Suprimir o alerta UNCHECKED_CAST
-
-class FilmListViewModel: ViewModel() {
+class FilmListViewModel(private val filmRepository: FilmRepository): ViewModel() {
 
     private val _filmList = MutableLiveData<List<Film>>()
     val filmList: LiveData<List<Film>>
@@ -35,9 +30,8 @@ class FilmListViewModel: ViewModel() {
 
     private suspend fun getAllFilms() {
 
-//      TODO 007: usar a referência à propriedade filmrepository
         try {
-            _filmList.postValue(FilmRepository().loadData())
+            _filmList.postValue(filmRepository.loadData())
         } catch (error: FilmLoadError) {
             Log.e("lib_ghi", "getAllFilms: Ocorreu um erro do tipo FilmLoadError", )
             _snackbar.value = error.message

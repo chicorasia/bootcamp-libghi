@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.chicorialabs.libghi.FilmListViewModel
 import br.com.chicorialabs.libghi.database.DataBaseSyncHelper
 import br.com.chicorialabs.libghi.databinding.ActivityMainBinding
+import br.com.chicorialabs.libghi.repository.FilmRepository
 import br.com.chicorialabs.libghi.ui.adapter.FilmAdapter
+import br.com.chicorialabs.libghi.viewmodel.FilmListViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
@@ -35,11 +37,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//      TODO 005: Instanciar a Factory passando a propriedade esperada
-//      TODO 006: Instanciar o ViewModel passando a Activity (this) e a Factory
-        val mViewModel = ViewModelProvider.NewInstanceFactory()
-            .create(FilmListViewModel::class.java)
-
+        val factory = FilmListViewModelFactory(FilmRepository())
+        val mViewModel = ViewModelProvider(this, factory).get(FilmListViewModel::class.java)
 
         mViewModel.init()
 
