@@ -7,8 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.chicorialabs.libghi.model.Film
 import br.com.chicorialabs.libghi.repository.FilmRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+//TODO 001: Adicionar o FilmRepository ao construtor do ViewModel
+//TODO 002: Criar um ViewModelFactory que estende ViewModelProvider.Factory
+//TODO 003: Implementar o membro <T: ViewModel?> create()
+//TODO 004: Suprimir o alerta UNCHECKED_CAST
 
 class FilmListViewModel: ViewModel() {
 
@@ -31,6 +35,7 @@ class FilmListViewModel: ViewModel() {
 
     private suspend fun getAllFilms() {
 
+//      TODO 007: usar a referência à propriedade filmrepository
         try {
             _filmList.postValue(FilmRepository().loadData())
         } catch (error: FilmLoadError) {

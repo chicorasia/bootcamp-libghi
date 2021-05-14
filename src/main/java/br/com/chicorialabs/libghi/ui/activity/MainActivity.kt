@@ -35,6 +35,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+//      TODO 005: Instanciar a Factory passando a propriedade esperada
+//      TODO 006: Instanciar o ViewModel passando a Activity (this) e a Factory
         val mViewModel = ViewModelProvider.NewInstanceFactory()
             .create(FilmListViewModel::class.java)
 
