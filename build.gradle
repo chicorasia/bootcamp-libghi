@@ -35,6 +35,7 @@ android {
     }
 }
 
+//TODO 001: Importar as dependências do Koin
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

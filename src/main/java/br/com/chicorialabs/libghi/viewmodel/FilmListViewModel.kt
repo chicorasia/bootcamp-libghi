@@ -9,10 +9,9 @@ import br.com.chicorialabs.libghi.model.Film
 import br.com.chicorialabs.libghi.repository.FilmRepository
 import kotlinx.coroutines.launch
 
-//TODO 001: Adicionar o FilmRepository ao construtor do ViewModel
-//TODO 002: Criar um ViewModelFactory que estende ViewModelProvider.Factory
-//TODO 003: Implementar o membro <T: ViewModel?> create()
-//TODO 004: Suprimir o alerta UNCHECKED_CAST
+//TODO 006: modificar o construtor do ViewModel para que receba um FilmRepository como parâmetro
+//TODO 007: passar uma função lambda ( ) -> ViewModel( ) para o delegate no AppModule
+//TODO 008: usar parametersOf() para injetar a dependência na inicialização por meio de delegate
 
 class FilmListViewModel: ViewModel() {
 
@@ -35,7 +34,6 @@ class FilmListViewModel: ViewModel() {
 
     private suspend fun getAllFilms() {
 
-//      TODO 007: usar a referência à propriedade filmrepository
         try {
             _filmList.postValue(FilmRepository().loadData())
         } catch (error: FilmLoadError) {

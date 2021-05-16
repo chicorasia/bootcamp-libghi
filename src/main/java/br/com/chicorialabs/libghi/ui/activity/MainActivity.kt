@@ -13,6 +13,12 @@ import br.com.chicorialabs.libghi.databinding.ActivityMainBinding
 import br.com.chicorialabs.libghi.ui.adapter.FilmAdapter
 import com.google.android.material.snackbar.Snackbar
 
+//TODO 001: Criar um pacote di e, nesse pacote, um arquivo `AppModule.kt`
+//TODO 002: Criar uma constante `viewModelModule` com um array de ViewModels
+//TODO 003: Criar uma classe AppApplication que extende Aplication e chama startKoin
+//TODO 004: Adicionar o AppApplication ao manifest.xml
+//TODO 005: Injetar a dependência na Activity usando o ViewModel como delegate
+
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
@@ -35,8 +41,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//      TODO 005: Instanciar a Factory passando a propriedade esperada
-//      TODO 006: Instanciar o ViewModel passando a Activity (this) e a Factory
         val mViewModel = ViewModelProvider.NewInstanceFactory()
             .create(FilmListViewModel::class.java)
 
