@@ -4,25 +4,25 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.com.chicorialabs.libghi.FilmListViewModel
 import br.com.chicorialabs.libghi.database.DataBaseSyncHelper
 import br.com.chicorialabs.libghi.databinding.ActivityMainBinding
+import br.com.chicorialabs.libghi.repository.FilmRepository
 import br.com.chicorialabs.libghi.ui.adapter.FilmAdapter
 import com.google.android.material.snackbar.Snackbar
+import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-//TODO 001: Criar um pacote di e, nesse pacote, um arquivo `AppModule.kt`
-//TODO 002: Criar uma constante `viewModelModule` com um array de ViewModels
-//TODO 003: Criar uma classe AppApplication que extende Aplication e chama startKoin
-//TODO 004: Adicionar o AppApplication ao manifest.xml
-//TODO 005: Injetar a dependência na Activity usando o ViewModel como delegate
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityMainBinding
 
+    private val mViewModel: FilmListViewModel by viewModel {
+        parametersOf(FilmRepository())
+    }
 
     private val filmRecyclerView: RecyclerView by lazy {
         binding.mainFilmRecyclerview
@@ -40,10 +40,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val mViewModel = ViewModelProvider.NewInstanceFactory()
-            .create(FilmListViewModel::class.java)
-
 
         mViewModel.init()
 

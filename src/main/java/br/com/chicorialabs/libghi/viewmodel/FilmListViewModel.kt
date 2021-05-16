@@ -9,11 +9,7 @@ import br.com.chicorialabs.libghi.model.Film
 import br.com.chicorialabs.libghi.repository.FilmRepository
 import kotlinx.coroutines.launch
 
-//TODO 006: modificar o construtor do ViewModel para que receba um FilmRepository como parâmetro
-//TODO 007: passar uma função lambda ( ) -> ViewModel( ) para o delegate no AppModule
-//TODO 008: usar parametersOf() para injetar a dependência na inicialização por meio de delegate
-
-class FilmListViewModel: ViewModel() {
+class FilmListViewModel(private val filmRepository: FilmRepository): ViewModel() {
 
     private val _filmList = MutableLiveData<List<Film>>()
     val filmList: LiveData<List<Film>>
@@ -35,7 +31,7 @@ class FilmListViewModel: ViewModel() {
     private suspend fun getAllFilms() {
 
         try {
-            _filmList.postValue(FilmRepository().loadData())
+            _filmList.postValue(filmRepository.loadData())
         } catch (error: FilmLoadError) {
             Log.e("lib_ghi", "getAllFilms: Ocorreu um erro do tipo FilmLoadError", )
             _snackbar.value = error.message
